@@ -1,0 +1,69 @@
+0 - Tenemos que tener ya una cuenta github creada
+
+http://help.github.com/mac-set-up-git/
+
+1 - Generacion de claves SSH
+ssh-keygen -t rsa -C "your_email@youremail.com"
+
+Esto creara los ficheros 'id_rsa' y 'id_rsa.pub' en la carpeta oculta '.ssh' contenido en el directorio home del usuario activo
+El correo electronico a poner es el mismo con el que se dio de alta la cuenta propia de github.com
+Me quedo con la ubicacion por defecto para los fichero id_rsa
+y le doy una password , que no tiene que ser la misma que la password de mi usuario github.com
+
+Si todo esto es correcto, se habrán generado los ficheros 'id_rsa' y 'id_rsa.pub'
+
+2- Publicar la clave publica (el contenido del fichero id_rsa.pub) en mii cuenta de github
+
+Account Settings->SSH Public Keys, y all añado ese contenido (add another public key)
+
+Habrá que añadir una clave publica por cada instalacion local de git que tenga (para clase, para casa, ....)
+
+3. Comprobar que la conexion entre mi instalacion local y github es correcta
+
+
+
+
+ssh -T git@github.com
+
+Are you sure...? le decimos que 'yes'
+nos pedira la palabra clave que le pusimos previamente en el proceso 1
+Si todo es correcto, dira 'Hi usuario' y habra generado un nuevo fichero en .ssh el fichero known_hosts
+
+
+4. Configuracion de datos globales: nombre de usuario y email (de mi usuario local)
+git config --global user.name "Firstname Lastname"
+git config --global user.email "your_email@youremail.com"
+
+5. Fijar la configuracion que conecta el usuario de github con mi instalacion local de git
+git config --global github.user username  (donde username es login de mi cuenta github)
+git config --global github.token 0123456789yourf0123456789token
+
+
+Engachamos con el github común
+
+ En la cuenta de grupo de github, en el repositorio compartido añado todos los colaboradores  (mediante sus login github) (en el repositorio compartido->admin->collaborators)
+Con este el enganche en común está hecho
+
+Trabajo con git de forma local
+1 - inicializo el git
+git init  (generara el directorio .git dentro de la carpeta donde estes trabajando)
+2 Embarco los ficheros
+git add .  (no me complico, los embarco todos)
+en nuestro caso no interesa que se embarque la carpeta 'nbproject' de NetBeans. Para esto creo dentro de la carpeta raiz de mi proyecto un fichero con nombre '.gitignore' y dentro le pongo en lineas distintas los nombres de las carpetas o ficheros que quiero que git add ignore y por tanto nunca embarque
+
+La creacion de un fichero con extensión y sin nombre en windows no funciona . En este caso, creamos el fichero '.gitignore' desde la consola de git mediante:
+touch .gitignore
+3- 'commiteamos' en local los ficheros embarcados previamente
+git commit -m "mensaje el que toque"
+
+
+Para subir a la nube github
+1. Enlazamos con el repositorio comun remoto:
+git remote add origin git@github.com:biblos-g3/Biblos-g3.git  (donde biblos-g3 es la cuenta github comun, y Biblos-g3.git es el repositorio compartido previamente mediante colaboradores.
+Este enlace solo hay que hacerlo una vez
+2. Subimos el proyecto a github->cuenta grupo->repositorio común
+
+git push -u origin master
+
+
+
